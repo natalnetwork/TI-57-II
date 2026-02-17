@@ -18,20 +18,23 @@ class TI57GUI:
     def __init__(self, root):
         self.root = root
         self.root.title("TI-57 II Calculator")
-        self.root.configure(bg='#2c3e50')
+        self.root.configure(bg='#C0C5CE')
         self.root.resizable(False, False)
+        
+        # Pfad zur State-Datei
+        self.state_file = Path(__file__).parent / "ti57_state.json"
         
         # Calculator Engine
         self.calc = TI57Calculator()
         
         # Lade gespeicherten Zustand
-        self.calc.load_state()
+        self.calc.load_state(str(self.state_file))
         
         # Warte auf Speicher-/Register-Nummer
         self.awaiting_memory_number = None
         
         # Haupt-Container
-        self.main_frame = tk.Frame(root, bg='#34495e', padx=15, pady=15)
+        self.main_frame = tk.Frame(root, bg='#C0C5CE', padx=15, pady=15)
         self.main_frame.pack(padx=10, pady=10)
         
         # Erstelle GUI-Komponenten
@@ -44,7 +47,7 @@ class TI57GUI:
         
     def on_closing(self):
         """Speichert Zustand beim Beenden"""
-        self.calc.save_state()
+        self.calc.save_state(str(self.state_file))
         self.root.destroy()
         
     def create_display(self):
@@ -72,100 +75,100 @@ class TI57GUI:
         
     def create_status_indicators(self):
         """Erstellt Status-Indikatoren"""
-        status_frame = tk.Frame(self.main_frame, bg='#34495e')
+        status_frame = tk.Frame(self.main_frame, bg='#C0C5CE')
         status_frame.grid(row=1, column=0, columnspan=5, pady=(0, 10))
         
         # Indikatoren für 2nd, INV, DRG, etc.
         self.indicator_2nd = tk.Label(status_frame, text="2nd", font=('Arial', 8), 
-                                      bg='#34495e', fg='#7f8c8d', width=4)
+                                      bg='#C0C5CE', fg='#7f8c8d', width=4)
         self.indicator_2nd.pack(side=tk.LEFT, padx=5)
         
         self.indicator_inv = tk.Label(status_frame, text="INV", font=('Arial', 8),
-                                      bg='#34495e', fg='#7f8c8d', width=4)
+                                      bg='#C0C5CE', fg='#7f8c8d', width=4)
         self.indicator_inv.pack(side=tk.LEFT, padx=5)
         
         self.indicator_drg = tk.Label(status_frame, text="DEG", font=('Arial', 8),
-                                      bg='#34495e', fg='#27ae60', width=4)
+                                      bg='#C0C5CE', fg='#27ae60', width=4)
         self.indicator_drg.pack(side=tk.LEFT, padx=5)
         
         self.indicator_pgm = tk.Label(status_frame, text="", font=('Arial', 8),
-                                      bg='#34495e', fg='#7f8c8d', width=4)
+                                      bg='#C0C5CE', fg='#7f8c8d', width=4)
         self.indicator_pgm.pack(side=tk.LEFT, padx=5)
         
     def create_keyboard(self):
         """Erstellt die Tastatur"""
         # Zeile 1: 2nd, INV, R/S, OFF, ON/C
-        self.create_button(2, 0, "2nd", "#e67e22", self.btn_2nd, "")
-        self.create_button(2, 1, "INV", "#e67e22", self.btn_inv, "")
-        self.create_button(2, 2, "R/S", "#c0392b", self.btn_run_stop, "")
-        self.create_button(2, 3, "OFF", "#7f8c8d", self.btn_off, "")
-        self.create_button(2, 4, "ON/C", "#c0392b", self.btn_on_clear, "")
+        self.create_button(2, 0, "2nd", "#6B7280", self.btn_2nd, "", False, "white")
+        self.create_button(2, 1, "INV", "#6B7280", self.btn_inv, "", False, "white")
+        self.create_button(2, 2, "R/S", "#6B7280", self.btn_run_stop, "", False, "white")
+        self.create_button(2, 3, "OFF", "#6B7280", self.btn_off, "", False, "white")
+        self.create_button(2, 4, "ON/C", "#4A90E2", self.btn_on_clear, "", False, "white")
         
         # Zeile 2: RST, GTO, LBL, BST, SST (2nd: x=t, x>=t, SBR, Dsz, Del)
-        self.create_button(3, 0, "RST", "#2c3e50", self.btn_rst, "x=t", True)
-        self.create_button(3, 1, "GTO", "#2c3e50", self.btn_gto, "x≥t", True)
-        self.create_button(3, 2, "LBL", "#2c3e50", self.btn_lbl, "SBR", True)
-        self.create_button(3, 3, "BST", "#2c3e50", self.btn_bst, "Dsz", True)
-        self.create_button(3, 4, "SST", "#2c3e50", self.btn_sst, "Del", True)
+        self.create_button(3, 0, "RST", "#6B7280", self.btn_rst, "x=t", True, "white")
+        self.create_button(3, 1, "GTO", "#6B7280", self.btn_gto, "x≥t", True, "white")
+        self.create_button(3, 2, "LBL", "#6B7280", self.btn_lbl, "SBR", True, "white")
+        self.create_button(3, 3, "BST", "#6B7280", self.btn_bst, "Dsz", True, "white")
+        self.create_button(3, 4, "SST", "#6B7280", self.btn_sst, "Del", True, "white")
         
         # Zeile 3: log, lnx, 1/x, x², √x (2nd: 10^x, e^x)
-        self.create_button(4, 0, "log", "#2c3e50", self.btn_log, "10ˣ", True)
-        self.create_button(4, 1, "lnx", "#2c3e50", self.btn_ln, "eˣ", True)
-        self.create_button(4, 2, "1/x", "#2c3e50", self.btn_reciprocal, "")
-        self.create_button(4, 3, "x²", "#2c3e50", self.btn_square, "")
-        self.create_button(4, 4, "√x", "#2c3e50", self.btn_sqrt, "")
+        self.create_button(4, 0, "log", "#6B7280", self.btn_log, "10ˣ", True, "white")
+        self.create_button(4, 1, "lnx", "#6B7280", self.btn_ln, "eˣ", True, "white")
+        self.create_button(4, 2, "1/x", "#6B7280", self.btn_reciprocal, "", False, "white")
+        self.create_button(4, 3, "x²", "#6B7280", self.btn_square, "", False, "white")
+        self.create_button(4, 4, "√x", "#6B7280", self.btn_sqrt, "", False, "white")
         
         # Zeile 4: DRG, sin, cos, tan, y^x (2nd: DRG>, P<>R, DMSDD, PI, x!)
-        self.create_button(5, 0, "DRG", "#2c3e50", self.btn_drg, "DRG>", True)
-        self.create_button(5, 1, "sin", "#2c3e50", self.btn_sin, "P↔R", True)
-        self.create_button(5, 2, "cos", "#2c3e50", self.btn_cos, "DMS", True)
-        self.create_button(5, 3, "tan", "#2c3e50", self.btn_tan, "π", True)
-        self.create_button(5, 4, "yˣ", "#2c3e50", self.btn_power, "x!", True)
+        self.create_button(5, 0, "DRG", "#6B7280", self.btn_drg, "DRG>", True, "white")
+        self.create_button(5, 1, "sin", "#6B7280", self.btn_sin, "P↔R", True, "white")
+        self.create_button(5, 2, "cos", "#6B7280", self.btn_cos, "DMS", True, "white")
+        self.create_button(5, 3, "tan", "#6B7280", self.btn_tan, "π", True, "white")
+        self.create_button(5, 4, "yˣ", "#6B7280", self.btn_power, "x!", True, "white")
         
         # Zeile 5: x<>t, EE, (, ), / (2nd: C.t, Fix, Intg, Frac, |x|)
-        self.create_button(6, 0, "x↔t", "#2c3e50", self.btn_exchange_t, "C.t", True)
-        self.create_button(6, 1, "EE", "#2c3e50", self.btn_ee, "Fix", True)
-        self.create_button(6, 2, "(", "#2c3e50", self.btn_paren_open, "Intg", True)
-        self.create_button(6, 3, ")", "#2c3e50", self.btn_paren_close, "Frac", True)
-        self.create_button(6, 4, "÷", "#34495e", self.btn_divide, "|x|", True)
+        self.create_button(6, 0, "x↔t", "#6B7280", self.btn_exchange_t, "C.t", True, "white")
+        self.create_button(6, 1, "EE", "#6B7280", self.btn_ee, "Fix", True, "white")
+        self.create_button(6, 2, "(", "#6B7280", self.btn_paren_open, "Intg", True, "white")
+        self.create_button(6, 3, ")", "#6B7280", self.btn_paren_close, "Frac", True, "white")
+        self.create_button(6, 4, "÷", "#4A90E2", self.btn_divide, "|x|", True, "white")
         
         # Zeile 6: STO, 7, 8, 9, × (2nd: part)
-        self.create_button(7, 0, "STO", "#34495e", self.btn_sto, "part", True)
-        self.create_button(7, 1, "7", "#2c3e50", lambda: self.btn_digit("7"), "")
-        self.create_button(7, 2, "8", "#2c3e50", lambda: self.btn_digit("8"), "")
-        self.create_button(7, 3, "9", "#2c3e50", lambda: self.btn_digit("9"), "")
-        self.create_button(7, 4, "×", "#34495e", self.btn_multiply, "")
+        self.create_button(7, 0, "STO", "#6B7280", self.btn_sto, "part", True, "white")
+        self.create_button(7, 1, "7", "#FFFFFF", lambda: self.btn_digit("7"), "", False, "black")
+        self.create_button(7, 2, "8", "#FFFFFF", lambda: self.btn_digit("8"), "", False, "black")
+        self.create_button(7, 3, "9", "#FFFFFF", lambda: self.btn_digit("9"), "", False, "black")
+        self.create_button(7, 4, "×", "#4A90E2", self.btn_multiply, "", False, "white")
         
         # Zeile 7: RCL, 4, 5, 6, - (2nd: CM)
-        self.create_button(8, 0, "RCL", "#34495e", self.btn_rcl, "CM", True)
-        self.create_button(8, 1, "4", "#2c3e50", lambda: self.btn_digit("4"), "")
-        self.create_button(8, 2, "5", "#2c3e50", lambda: self.btn_digit("5"), "")
-        self.create_button(8, 3, "6", "#2c3e50", lambda: self.btn_digit("6"), "")
-        self.create_button(8, 4, "−", "#34495e", self.btn_subtract, "")
+        self.create_button(8, 0, "RCL", "#6B7280", self.btn_rcl, "CM", True, "white")
+        self.create_button(8, 1, "4", "#FFFFFF", lambda: self.btn_digit("4"), "", False, "black")
+        self.create_button(8, 2, "5", "#FFFFFF", lambda: self.btn_digit("5"), "", False, "black")
+        self.create_button(8, 3, "6", "#FFFFFF", lambda: self.btn_digit("6"), "", False, "black")
+        self.create_button(8, 4, "−", "#4A90E2", self.btn_subtract, "", False, "white")
         
         # Zeile 8: EXC, 1, 2, 3, + (2nd: CP)
-        self.create_button(9, 0, "EXC", "#34495e", self.btn_exc, "CP", True)
-        self.create_button(9, 1, "1", "#2c3e50", lambda: self.btn_digit("1"), "")
-        self.create_button(9, 2, "2", "#2c3e50", lambda: self.btn_digit("2"), "")
-        self.create_button(9, 3, "3", "#2c3e50", lambda: self.btn_digit("3"), "")
-        self.create_button(9, 4, "+", "#34495e", self.btn_add, "")
+        self.create_button(9, 0, "EXC", "#6B7280", self.btn_exc, "CP", True, "white")
+        self.create_button(9, 1, "1", "#FFFFFF", lambda: self.btn_digit("1"), "", False, "black")
+        self.create_button(9, 2, "2", "#FFFFFF", lambda: self.btn_digit("2"), "", False, "black")
+        self.create_button(9, 3, "3", "#FFFFFF", lambda: self.btn_digit("3"), "", False, "black")
+        self.create_button(9, 4, "+", "#4A90E2", self.btn_add, "", False, "white")
         
         # Zeile 9: LRN, 0, ., +/-, = (2nd: Pause)
-        self.create_button(10, 0, "LRN", "#34495e", self.btn_lrn, "Pause", True)
-        self.create_button(10, 1, "0", "#2c3e50", lambda: self.btn_digit("0"), "")
-        self.create_button(10, 2, ".", "#2c3e50", self.btn_decimal, "")
-        self.create_button(10, 3, "+/−", "#2c3e50", self.btn_change_sign, "")
-        self.create_button(10, 4, "=", "#27ae60", self.btn_equals, "")
+        self.create_button(10, 0, "LRN", "#6B7280", self.btn_lrn, "Pause", True, "white")
+        self.create_button(10, 1, "0", "#FFFFFF", lambda: self.btn_digit("0"), "", False, "black")
+        self.create_button(10, 2, ".", "#FFFFFF", self.btn_decimal, "", False, "black")
+        self.create_button(10, 3, "+/−", "#6B7280", self.btn_change_sign, "", False, "white")
+        self.create_button(10, 4, "=", "#4A90E2", self.btn_equals, "", False, "white")
         
-    def create_button(self, row, col, text, bg_color, command, secondary_text="", has_secondary=False):
+    def create_button(self, row, col, text, bg_color, command, secondary_text="", has_secondary=False, fg_color='white'):
         """Erstellt einen Button mit optionaler Sekundär-Funktion"""
-        btn_frame = tk.Frame(self.main_frame, bg='#34495e')
-        btn_frame.grid(row=row, column=col, padx=3, pady=3)
+        btn_frame = tk.Frame(self.main_frame, bg='#C0C5CE')
+        btn_frame.grid(row=row, column=col, padx=3, pady=3, sticky='s')
         
         # Sekundär-Text oben (klein)
         if has_secondary and secondary_text:
             sec_label = tk.Label(btn_frame, text=secondary_text, 
-                                font=('Arial', 7), bg='#34495e', fg='#e67e22')
+                                font=('Arial', 7), bg='#C0C5CE', fg='#8B3A3A')
             sec_label.pack()
         
         # Haupt-Button
@@ -174,7 +177,7 @@ class TI57GUI:
             text=text,
             command=command,
             bg=bg_color,
-            fg='white',
+            fg=fg_color,
             font=('Arial', 10, 'bold'),
             width=6,
             height=2,
@@ -372,7 +375,7 @@ class TI57GUI:
     
     def btn_off(self):
         """OFF - Speichert und beendet"""
-        self.calc.save_state()
+        self.calc.save_state(str(self.state_file))
         self.root.destroy()
         
     def btn_drg(self):
@@ -579,15 +582,11 @@ class TI57GUI:
             with open(file_path, 'r', encoding='utf-8') as f:
                 program_data = json.load(f)
             
-            # Speichere aktuellen Zustand
-            self.calc.save_state()
-            
             # Kopiere die Programm-Datei zur ti57_state.json
-            state_file = current_dir / "ti57_state.json"
-            shutil.copy(file_path, state_file)
+            shutil.copy(file_path, self.state_file)
             
             # Lade den neuen Zustand
-            self.calc.load_state()
+            self.calc.load_state(str(self.state_file))
             
             program_name = Path(file_path).stem
             messagebox.showinfo("Erfolg", 

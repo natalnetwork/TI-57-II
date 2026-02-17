@@ -1,13 +1,14 @@
 {
   "program": [
-    "digit_3",
-    "digit_2",
-    "subtract",
-    "equals",
-    "digit_5",
     "multiply",
-    "digit_9",
-    "divide",
+    "digit_0",
+    "decimal",
+    "digit_6",
+    "digit_2",
+    "digit_1",
+    "digit_3",
+    "digit_7",
+    "digit_1",
     "equals"
   ]
 }
