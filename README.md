@@ -7,6 +7,8 @@
 
 A complete emulation of the Texas Instruments TI-57 II programmable scientific calculator.
 
+![TI-57 II Calculator GUI](docs/images/calculator_gui.png)
+
 ## Features
 
 - **Scientific Functions**: Trigonometry (sin, cos, tan), Logarithms (log, ln), Exponential functions
