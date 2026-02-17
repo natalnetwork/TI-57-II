@@ -1,0 +1,14 @@
+{
+  "program": [
+    "square",
+    "add",
+    "square",
+    "add",
+    "square",
+    "equals",
+    "divide",
+    "digit_3",
+    "equals",
+    "sqrt"
+  ]
+}

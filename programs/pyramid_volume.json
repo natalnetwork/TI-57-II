@@ -1,0 +1,12 @@
+{
+  "program": [
+    "multiply",
+    "sto",
+    "digit_0",
+    "rcl",
+    "digit_0",
+    "divide",
+    "digit_3",
+    "equals"
+  ]
+}

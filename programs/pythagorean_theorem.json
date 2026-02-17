@@ -1,0 +1,13 @@
+{
+  "program": [
+    "square",
+    "sto",
+    "digit_0",
+    "square",
+    "add",
+    "rcl",
+    "digit_0",
+    "equals",
+    "sqrt"
+  ]
+}
