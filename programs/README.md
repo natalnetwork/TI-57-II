@@ -163,17 +163,21 @@ Result in km: 16.0934
 
 **Usage:**
 ```
-Enter weight in kg (e.g., 75)
-R/S
-Enter height in meters (e.g., 1.75)
-R/S
-Result: 24.49 (normal weight)
+1. Enter height in meters (e.g., 1.75)
+2. Press x² (to square the height → 3.0625)
+3. Press x↔t (to store height² in t-register)
+4. Enter weight in kg (e.g., 75)
+5. Press R/S
+6. Result: 24.49 (normal weight)
 ```
 
 **Examples:**
 - 70 kg / 1.75 m = 22.86 BMI
+  → 1.75 x² x↔t, then 70 R/S
 - 80 kg / 1.80 m = 24.69 BMI
+  → 1.80 x² x↔t, then 80 R/S
 - 100 kg / 1.70 m = 34.60 BMI
+  → 1.70 x² x↔t, then 100 R/S
 
 **BMI Categories:**
 - < 18.5: Underweight

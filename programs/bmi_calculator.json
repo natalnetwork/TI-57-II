@@ -1,19 +1,7 @@
 {
   "program": [
-    "sto",
-    "digit_1",
-    "rcl",
-    "digit_1",
-    "multiply",
-    "digit_1",
-    "decimal",
-    "digit_7",
-    "digit_5",
-    "multiply",
     "divide",
-    "rcl",
-    "digit_0",
-    "multiply",
+    "exchange_t",
     "equals"
   ]
 }
