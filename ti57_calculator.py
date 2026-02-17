@@ -599,10 +599,10 @@ class TI57Calculator:
         if self.programming_mode:
             self.display = "00"
             
-    def insert_step(self, operation: str):
+    def insert_step(self, operation_name: str, operation_func):
         """INS - Fügt Programmschritt ein"""
         if self.programming_mode and len(self.program) < 50:
-            self.program.insert(self.program_counter, operation)
+            self.program.insert(self.program_counter, (operation_name, operation_func))
             self.program_counter += 1
             self.display = f"{self.program_counter:02d}"
             
