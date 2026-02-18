@@ -157,7 +157,8 @@ class TI57GUI:
         self.create_button(10, 0, "LRN", "#6B7280", self.btn_lrn, "Pause", True, "white")
         self.create_button(10, 1, "0", "#FFFFFF", lambda: self.btn_digit("0"), "", False, "black")
         self.create_button(10, 2, ".", "#FFFFFF", self.btn_decimal, "", False, "black")
-        self.create_button(10, 3, "+/−", "#6B7280", self.btn_change_sign, "", False, "white")
+        #self.create_button(10, 3, "+/−", "#6B7280", self.btn_change_sign, "", False, "white")
+        self.create_button(10, 3, "+/−", "#FFFFFF", self.btn_change_sign, "", False, "black")
         self.create_button(10, 4, "=", "#4A90E2", self.btn_equals, "", False, "white")
         
     def create_button(self, row, col, text, bg_color, command, secondary_text="", has_secondary=False, fg_color='white'):
